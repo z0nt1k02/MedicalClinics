@@ -1,0 +1,12 @@
+﻿services:
+  medicalclinics.api:
+    image: medicalclinics.api
+    build:
+      context: .
+      dockerfile: MedicalClinics.API/Dockerfile
+
+  medicalclinics.core:
+    image: medicalclinics.core
+    build:
+      context: .
+      dockerfile: MedicalClinics.Core/Dockerfile
