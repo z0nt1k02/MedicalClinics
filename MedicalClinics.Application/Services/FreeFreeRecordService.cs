@@ -69,7 +69,8 @@ public class FreeFreeRecordService : IFreeRecordService
                 "dd.MM.yyyy HH:mm",
                 CultureInfo.InvariantCulture
             );
-            newDate = TimeZoneInfo.ConvertTimeToUtc(parsedDateTime,TimeZoneInfo.Local);
+            TimeZoneInfo ekbTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Yekaterinburg");
+            newDate = DateTime.SpecifyKind(parsedDateTime, DateTimeKind.Utc);
         }
         catch(FormatException ex)
         {

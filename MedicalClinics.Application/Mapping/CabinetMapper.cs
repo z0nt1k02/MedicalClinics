@@ -10,7 +10,17 @@ public static class CabinetMapper
         return new CabinetShortDto(entity.Id.ToString(), entity.Name);
     }
 
-    public static CabinetDto ToDto(this CabinetEntity entity)
+    /*public static CabinetDto ToDto(this CabinetEntity entity)
+    {
+        List<string> freeDates = [];
+        foreach (var freeRecord in entity.FreeRecords)
+        {
+            freeDates.Add(freeRecord.RecordDate.ToString("dd.MM.yyyy"));
+        }
+        return new CabinetDto(entity.Id.ToString(),entity.Name,entity.Clinic!.Name,entity.Id.ToString(),freeDates);
+    }*/
+    
+    public static CabinetDto ToDtoDays(this CabinetEntity entity)
     {
         List<string> freeDates = [];
         foreach (var freeRecord in entity.FreeRecords)
@@ -19,4 +29,28 @@ public static class CabinetMapper
         }
         return new CabinetDto(entity.Id.ToString(),entity.Name,entity.Clinic!.Name,entity.Id.ToString(),freeDates);
     }
+    
+    public static CabinetDto ToDtoHours(this CabinetEntity entity)
+    {
+        List<string> freeDates = [];
+        foreach (var freeRecord in entity.FreeRecords)
+        {
+            freeDates.Add(freeRecord.RecordDate.ToString("HH:mm"));
+        }
+        return new CabinetDto(entity.Id.ToString(),entity.Name,entity.Clinic!.Name,entity.Id.ToString(),freeDates);
+    }
+
+    /*public static CabinetFreeRecordsHoursDto ToFreeHoursDto(this CabinetEntity entity, DateTime date)
+    {
+        List<string> freeDatesHours = [];
+        foreach (var freeRecord in entity.FreeRecords)
+        {
+            if (freeRecord.RecordDate.Date == date.Date)
+            {
+                freeDatesHours.Add(freeRecord.RecordDate.ToString("HH:mm"));
+            }
+            
+        }
+        return new CabinetFreeRecordsHoursDto(entity.Id.ToString(),entity.Name,entity.Clinic!.Name,entity.Id.ToString(),freeDates);
+    }*/
 }
