@@ -1,5 +1,6 @@
 ﻿using MedicalClinics.Core.Configurations;
 using MedicalClinics.Core.Database.Entities;
+using MedicalClinics.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedicalClinics.Infrastructure.Database;
@@ -12,8 +13,11 @@ public class MedicalClinicsDBContext(DbContextOptions<MedicalClinicsDBContext> o
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<FreeRecord>();
         modelBuilder.ApplyConfiguration(new CabinetConfiguration());
         modelBuilder.ApplyConfiguration(new ClinicConfiguration());
         modelBuilder.ApplyConfiguration(new FreeRecordConfiguration());
+        
+        
     }
 }

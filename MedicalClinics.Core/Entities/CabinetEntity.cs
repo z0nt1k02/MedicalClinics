@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using MedicalClinics.Core.Entities;
 
 namespace MedicalClinics.Core.Database.Entities;
 

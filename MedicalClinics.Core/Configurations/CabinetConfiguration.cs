@@ -10,5 +10,6 @@ public class CabinetConfiguration : IEntityTypeConfiguration<CabinetEntity>
     {
         builder.HasMany(f => f.FreeRecords)
             .WithOne(c => c.Cabinet);
+        
     }
 }

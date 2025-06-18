@@ -1,4 +1,5 @@
 ﻿using MedicalClinics.Core.Database.Entities;
+using MedicalClinics.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

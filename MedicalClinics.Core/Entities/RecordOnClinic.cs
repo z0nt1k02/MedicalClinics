@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using MedicalClinics.Core.Entities;
 
 namespace MedicalClinics.Core.Database.Entities;
 
@@ -14,7 +15,6 @@ public class RecordOnClinic
     
     [ForeignKey(("CabinetId"))]
     public CabinetEntity? Cabinet { get; set; }
-    
     
     public DateTime RecordDateOnUTC { get; set; }
     
