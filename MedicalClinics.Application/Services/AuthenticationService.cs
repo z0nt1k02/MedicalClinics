@@ -15,9 +15,11 @@ public class AuthenticationService : IAuthenticationService
     private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenProvider _tokenProvider;
 
-    public AuthenticationService(IMedicalClinicsDbContext context)
+    public AuthenticationService(IMedicalClinicsDbContext context, IPasswordHasher passwordHasher, ITokenProvider tokenProvider)
     {
         _context = context;
+        _passwordHasher = passwordHasher;
+        _tokenProvider = tokenProvider;
     }
     public async Task Registration(string login, string password)
     {
@@ -45,7 +47,7 @@ public class AuthenticationService : IAuthenticationService
             throw new AuthenticationException("Invalid login or password");
         var result = _passwordHasher.VerifyHash(password, user.HashedPassword);
         if(!result)
-            throw new Exception("Invalid password");
+            throw new AuthenticationException("Invalid login or password");
         var token = _tokenProvider.GenerateToken(user);
         return token;
 

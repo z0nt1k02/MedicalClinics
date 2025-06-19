@@ -10,13 +10,13 @@ public class MedicalClinicsDBContext : DbContext,IMedicalClinicsDbContext
 {
     public DbSet<ClinicEntity> Clinics { get; set; }
     public DbSet<CabinetEntity> Cabinets { get; set; }
-    public DbSet<RecordOnClinic> RecordOnClinics { get; set; }
+    public DbSet<RecordOnClinicEntity> RecordOnClinics { get; set; }
     
     public DbSet<UserEntity> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<FreeRecord>();
+        modelBuilder.Entity<FreeRecordEntity>();
         modelBuilder.ApplyConfiguration(new CabinetConfiguration());
         modelBuilder.ApplyConfiguration(new ClinicConfiguration());
         modelBuilder.ApplyConfiguration(new FreeRecordConfiguration());

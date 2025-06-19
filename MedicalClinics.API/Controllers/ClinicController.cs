@@ -1,6 +1,7 @@
 ﻿using MedicalClinics.Application.DTOs;
 using MedicalClinics.Application.Interfaces;
 using MedicalClinics.Application.Mapping;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedicalClinics.API.Controllers;
@@ -16,6 +17,7 @@ public class ClinicController : ControllerBase
         _clinicService = clinicService;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAllClinics()
     {
@@ -23,6 +25,7 @@ public class ClinicController : ControllerBase
         return Ok(clinics.Select(c => c.ToDto()).ToList());
     }
 
+    [Authorize]
     [HttpGet]
     [Route("{id}")]
     public async Task<IActionResult> GetClinicById(int id)
@@ -38,6 +41,7 @@ public class ClinicController : ControllerBase
         }
     }
     
+    [Authorize(policy: "Admin")]
     [HttpPost]
     public async Task<IActionResult> CreateClinic(CreateClinicDto dto)
     {
@@ -51,6 +55,7 @@ public class ClinicController : ControllerBase
         
     }
     
+    [Authorize(policy: "Admin")]
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> DeleteClinic(int id)

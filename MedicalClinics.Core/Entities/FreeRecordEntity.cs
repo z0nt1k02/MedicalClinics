@@ -2,7 +2,7 @@
 
 namespace MedicalClinics.Core.Database.Entities;
 
-public class FreeRecord
+public class FreeRecordEntity
 {
     public Guid Id { get; set; }
     public DateTime RecordDate { get; set; }

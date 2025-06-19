@@ -3,12 +3,16 @@ using MedicalClinics.Core.Entities;
 
 namespace MedicalClinics.Core.Database.Entities;
 
-public class RecordOnClinic
+public class RecordOnClinicEntity
 {
     public Guid Id { get; set; }
     
     public int ClinicId { get; set; }
     public Guid CabinetId { get; set; }
+    
+    /*public string CabinetName { get; set; } = string.Empty;
+    
+    public string ClinicName { get; set; } = string.Empty;*/
     
     [ForeignKey(("ClinicId"))]
     public ClinicEntity? Clinic { get; set; }
@@ -18,6 +22,7 @@ public class RecordOnClinic
     
     public DateTime RecordDateOnUTC { get; set; }
     
+    public string Contact{ get; set; } = string.Empty;
     public string Comment { get; set; } = string.Empty;
     
     public Guid UserId { get; set; }

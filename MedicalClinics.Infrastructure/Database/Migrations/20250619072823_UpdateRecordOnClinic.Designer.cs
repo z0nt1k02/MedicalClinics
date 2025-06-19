@@ -3,6 +3,7 @@ using System;
 using MedicalClinics.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedicalClinics.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalClinicsDBContext))]
-    partial class MedicalClinicsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250619072823_UpdateRecordOnClinic")]
+    partial class UpdateRecordOnClinic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +45,7 @@ namespace MedicalClinics.Infrastructure.Migrations
                     b.ToTable("Cabinets");
                 });
 
-            modelBuilder.Entity("MedicalClinics.Core.Database.Entities.FreeRecordEntity", b =>
+            modelBuilder.Entity("MedicalClinics.Core.Database.Entities.FreeRecord", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,10 +61,10 @@ namespace MedicalClinics.Infrastructure.Migrations
 
                     b.HasIndex("CabinetId");
 
-                    b.ToTable("FreeRecordEntity");
+                    b.ToTable("FreeRecord");
                 });
 
-            modelBuilder.Entity("MedicalClinics.Core.Database.Entities.RecordOnClinicEntity", b =>
+            modelBuilder.Entity("MedicalClinics.Core.Database.Entities.RecordOnClinic", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,14 +73,18 @@ namespace MedicalClinics.Infrastructure.Migrations
                     b.Property<Guid>("CabinetId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("ClinicId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Comment")
+                    b.Property<string>("CabinetName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Contact")
+                    b.Property<int>("ClinicId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ClinicName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -151,7 +158,7 @@ namespace MedicalClinics.Infrastructure.Migrations
                     b.Navigation("Clinic");
                 });
 
-            modelBuilder.Entity("MedicalClinics.Core.Database.Entities.FreeRecordEntity", b =>
+            modelBuilder.Entity("MedicalClinics.Core.Database.Entities.FreeRecord", b =>
                 {
                     b.HasOne("MedicalClinics.Core.Database.Entities.CabinetEntity", "Cabinet")
                         .WithMany("FreeRecords")
@@ -162,10 +169,10 @@ namespace MedicalClinics.Infrastructure.Migrations
                     b.Navigation("Cabinet");
                 });
 
-            modelBuilder.Entity("MedicalClinics.Core.Database.Entities.RecordOnClinicEntity", b =>
+            modelBuilder.Entity("MedicalClinics.Core.Database.Entities.RecordOnClinic", b =>
                 {
                     b.HasOne("MedicalClinics.Core.Database.Entities.CabinetEntity", "Cabinet")
-                        .WithMany("RecordsOnClinic")
+                        .WithMany()
                         .HasForeignKey("CabinetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -188,8 +195,6 @@ namespace MedicalClinics.Infrastructure.Migrations
             modelBuilder.Entity("MedicalClinics.Core.Database.Entities.CabinetEntity", b =>
                 {
                     b.Navigation("FreeRecords");
-
-                    b.Navigation("RecordsOnClinic");
                 });
 
             modelBuilder.Entity("MedicalClinics.Core.Entities.ClinicEntity", b =>

@@ -12,6 +12,7 @@ public static class DIExtension
         serviceCollection.AddScoped<IClinicService, ClinicService>();
         serviceCollection.AddScoped<ICabinetService, CabinetService>();
         serviceCollection.AddScoped<IFreeRecordService, FreeRecordService>();
+        serviceCollection.AddScoped<IRecordOnClinicService, RecordOnClinicService>();
         
         serviceCollection.AddScoped<IAuthenticationService, AuthenticationService>();
 

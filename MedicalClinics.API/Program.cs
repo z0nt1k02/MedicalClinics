@@ -14,6 +14,7 @@ services.AddDbContext<IMedicalClinicsDbContext,MedicalClinicsDBContext>(options 
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+services.AddApiAuthentications(configuration);
 // Add services to the container.
 services.AddCustomService();
 builder.Services.AddControllers();

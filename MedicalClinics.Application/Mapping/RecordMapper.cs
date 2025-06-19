@@ -5,7 +5,7 @@ namespace MedicalClinics.Application.Mapping;
 
 public static class RecordMapper
 {
-    public static FreeRecordDto ToDto(this FreeRecord entity)
+    public static FreeRecordDto ToDto(this FreeRecordEntity entity)
     {
         return new FreeRecordDto(entity.Id, entity.CabinetId, entity.RecordDate.ToString());
     }

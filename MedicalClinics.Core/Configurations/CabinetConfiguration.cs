@@ -9,7 +9,12 @@ public class CabinetConfiguration : IEntityTypeConfiguration<CabinetEntity>
     public void Configure(EntityTypeBuilder<CabinetEntity> builder)
     {
         builder.HasMany(f => f.FreeRecords)
-            .WithOne(c => c.Cabinet);
+            .WithOne(c => c.Cabinet)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.HasMany(r=>r.RecordsOnClinic)
+            .WithOne(c => c.Cabinet)
+            .OnDelete(DeleteBehavior.Cascade);
         
     }
 }

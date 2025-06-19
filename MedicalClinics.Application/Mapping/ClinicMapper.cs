@@ -14,4 +14,9 @@ public static class ClinicMapper
             clinicEntity.Cabinets.Select(c=>c.ToShortDto()).ToList()
         );
     }
+
+    public static ClinicShortDto ToShortDto(this ClinicEntity clinicEntity)
+    {
+        return new ClinicShortDto(clinicEntity.Id,clinicEntity.Name);
+    }
 }

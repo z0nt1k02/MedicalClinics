@@ -17,11 +17,11 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Registration(AuthDto authDto)
+    public async Task<IActionResult> Registration(RegistrationDto registrationDto)
     {
         try
         {
-            await _authenticationService.Registration(authDto.login, authDto.password);
+            await _authenticationService.Registration(registrationDto.login, registrationDto.password);
             return Ok("Registration successful");
         }
         catch (AuthenticationException ex)
@@ -31,12 +31,12 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(AuthDto authDto)
+    public async Task<IActionResult> Login(LoginDto loginDto)
     {
         HttpContext context = HttpContext;
         try
         {
-            var token = await _authenticationService.Login(authDto.login, authDto.password);
+            var token = await _authenticationService.Login(loginDto.login, loginDto.password);
             context.Response.Cookies.Append("token", token);
             return Ok("Login successful");
         }

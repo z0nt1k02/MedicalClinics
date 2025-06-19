@@ -2,10 +2,17 @@
 
 namespace MedicalClinics.Application.DTOs.Auth;
 
-public record AuthDto(
+public record RegistrationDto
+(
+    
     [Required(ErrorMessage = "Login is required")]
-    [MinLength(6, ErrorMessage = "Login must be at least 6 characters long")]
+    [MinLength(4, ErrorMessage = "Login must be at least 4 characters long")]
     string login,
+    
+    
     [Required(ErrorMessage = "Password is required")]
     [MinLength(5, ErrorMessage = "Password must be at least 5 characters long")]
-    string password);
+    [RegularExpression(@"^(?=.*[!@#$%^&*]).+$", 
+        ErrorMessage = "Password must contain a special character (!@#$%^&*)")]
+    string password
+);

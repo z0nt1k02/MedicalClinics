@@ -7,10 +7,12 @@ public class CabinetEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public List<FreeRecord> FreeRecords { get; set; } = [];
+    public List<FreeRecordEntity> FreeRecords { get; set; } = [];
     
     [ForeignKey("ClinicId")]
     public ClinicEntity? Clinic { get; set; }
     public int ClinicId { get; set; }
+    
+    public List<RecordOnClinicEntity> RecordsOnClinic { get; set; } = [];
 
 }

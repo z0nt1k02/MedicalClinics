@@ -15,7 +15,7 @@ public class FreeRecordService : IFreeRecordService
         _context = context;
         _cabinetService = cabinetService;
     }
-    public async Task<FreeRecord> AddFreeRecord(CreateFreeRecordDto dto,Guid cabinetId)
+    public async Task<FreeRecordEntity> AddFreeRecord(CreateFreeRecordDto dto,Guid cabinetId)
     {
         CabinetEntity? cabinet = await _context.Cabinets
             .Include(f=>f.FreeRecords)
@@ -31,7 +31,7 @@ public class FreeRecordService : IFreeRecordService
             throw new Exception("This date already exists in the list");
         }
 
-        FreeRecord newFreeRecord = new FreeRecord
+        FreeRecordEntity newFreeRecordEntity = new FreeRecordEntity
         {
             Id = Guid.NewGuid(),
             RecordDate = parsedDate,
@@ -39,12 +39,12 @@ public class FreeRecordService : IFreeRecordService
             Cabinet = cabinet,
         };
 
-        _context.Set<FreeRecord>().Add(newFreeRecord);
+        _context.Set<FreeRecordEntity>().Add(newFreeRecordEntity);
         await _context.SaveChangesAsync();
-        return newFreeRecord;
+        return newFreeRecordEntity;
     }
 
-    private bool DateCheck(DateTime targetDate, List<FreeRecord> freeRecords)
+    public bool DateCheck(DateTime targetDate, List<FreeRecordEntity> freeRecords)
     {
         var dateTimeSet = new HashSet<DateTime>(
             freeRecords
@@ -55,7 +55,7 @@ public class FreeRecordService : IFreeRecordService
         return result;
     }
 
-    private DateTime ParseDate(string date)
+    public DateTime ParseDate(string date)
     {
         DateTime newDate;
         try
@@ -71,7 +71,7 @@ public class FreeRecordService : IFreeRecordService
         }
         catch(FormatException ex)
         {
-            throw new FormatException("Invalid date format");
+            throw new FormatException("Invalid date format",ex);
         }
         return newDate;
     }

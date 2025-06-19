@@ -88,7 +88,7 @@ public class CabinetService : ICabinetService
             Name = dto.name,
             ClinicId = int.Parse(dto.clinicId),
             Clinic = clinic,
-            FreeRecords = new List<FreeRecord>(),
+            FreeRecords = new List<FreeRecordEntity>(),
         };
         await _context.Cabinets.AddAsync(newCabinet);
         

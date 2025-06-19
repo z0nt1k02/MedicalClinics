@@ -19,7 +19,7 @@ public class UserEntity
     public string Login { get; private set; }
     public Role Role { get; set; }
     
-    public List<RecordOnClinic> RecordsOnClinic { get; set; }
+    public List<RecordOnClinicEntity> RecordsOnClinic { get; set; }
 
     public static UserEntity Create(Guid id,string login,string hashedPassword)
     {

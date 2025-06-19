@@ -8,7 +8,7 @@ public interface IMedicalClinicsDbContext
 {
     public DbSet<ClinicEntity> Clinics { get; set; }
     public DbSet<CabinetEntity> Cabinets { get; set; }
-    public DbSet<RecordOnClinic> RecordOnClinics { get; set; }
+    public DbSet<RecordOnClinicEntity> RecordOnClinics { get; set; }
     public DbSet<UserEntity> Users { get; set; }
     
     DbSet<T> Set<T>() where T : class;

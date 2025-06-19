@@ -6,6 +6,8 @@ namespace MedicalClinics.Application.Interfaces;
 
 public interface IFreeRecordService
 {
-    Task<FreeRecord> AddFreeRecord(CreateFreeRecordDto dto,Guid cabinetId);
-    
+    Task<FreeRecordEntity> AddFreeRecord(CreateFreeRecordDto dto,Guid cabinetId);
+    bool DateCheck(DateTime targetDate, List<FreeRecordEntity> freeRecords);
+    DateTime ParseDate(string date);
+
 }

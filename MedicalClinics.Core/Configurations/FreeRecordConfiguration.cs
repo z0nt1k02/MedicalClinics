@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MedicalClinics.Core.Configurations;
 
-public class FreeRecordConfiguration : IEntityTypeConfiguration<FreeRecord>
+public class FreeRecordConfiguration : IEntityTypeConfiguration<FreeRecordEntity>
 {
-    public void Configure(EntityTypeBuilder<FreeRecord> builder)
+    public void Configure(EntityTypeBuilder<FreeRecordEntity> builder)
     {
         builder.HasOne(c => c.Cabinet)
             .WithMany(c => c.FreeRecords);

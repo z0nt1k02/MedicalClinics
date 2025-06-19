@@ -1,8 +1,10 @@
-﻿using MedicalClinics.Application.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
+using MedicalClinics.Application.DTOs;
 using MedicalClinics.Application.DTOs.FreeRecords;
 using MedicalClinics.Application.Interfaces;
 using MedicalClinics.Application.Mapping;
 using MedicalClinics.Core.Database.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedicalClinics.API.Controllers;
@@ -20,6 +22,7 @@ public class CabinetController : ControllerBase
         _freeRecordService = freeRecordService;
     }
 
+    [Authorize]
     [HttpGet]
     [Route("{id}")]
     public async Task<IActionResult> GetCabinetWithFreeDays(Guid id,[FromQuery] int? year, [FromQuery] int? month)
@@ -35,9 +38,12 @@ public class CabinetController : ControllerBase
         }
     }
     
+    [Authorize]
     [HttpGet]
-    [Route("{id}/byDay")]
-    public async Task<IActionResult> GetCabinetWithFreeHours(Guid id,[FromQuery] int year, [FromQuery] int month,[FromQuery]int day)
+    [Route("{id}/date")]
+    public async Task<IActionResult> GetCabinetWithFreeHours(Guid id,[FromQuery,Required(ErrorMessage = "Year is required")] int year, 
+        [FromQuery,Required(ErrorMessage = "Month is required")] int month,
+        [FromQuery,Required(ErrorMessage = "Day is required")]int day)
     {
         try
         {
@@ -50,6 +56,7 @@ public class CabinetController : ControllerBase
         }
     }
     
+    [Authorize(policy: "Admin")]
     [HttpPost]
     public async Task<IActionResult> AddCabinet(CreateCabinetDto cabinetDto)
     {
@@ -61,14 +68,17 @@ public class CabinetController : ControllerBase
             newCabinet.ToDtoDays()
         );
     }
+    
+    [Authorize(policy: "Admin")]
     [HttpPost]
     [Route("{cabinetId}/addfreerecord")]
     public async Task<IActionResult> AddFreeRecord(CreateFreeRecordDto dto, Guid cabinetId)
     {
-        FreeRecord freeRecord = await _freeRecordService.AddFreeRecord(dto, cabinetId);
-        return Ok(freeRecord.ToDto());
+        FreeRecordEntity freeRecordEntity = await _freeRecordService.AddFreeRecord(dto, cabinetId);
+        return Ok(freeRecordEntity.ToDto());
     }
 
+    [Authorize(policy: "Admin")]
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> DeleteCabinet(Guid id)

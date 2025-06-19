@@ -3,6 +3,7 @@ using System;
 using MedicalClinics.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedicalClinics.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalClinicsDBContext))]
-    partial class MedicalClinicsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250619110246_UpdateConfigurations")]
+    partial class UpdateConfigurations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,8 +73,16 @@ namespace MedicalClinics.Infrastructure.Migrations
                     b.Property<Guid>("CabinetId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("CabinetName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("ClinicId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ClinicName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Comment")
                         .IsRequired()

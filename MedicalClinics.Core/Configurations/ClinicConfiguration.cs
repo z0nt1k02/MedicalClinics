@@ -10,6 +10,7 @@ public class ClinicConfiguration : IEntityTypeConfiguration<ClinicEntity>
     public void Configure(EntityTypeBuilder<ClinicEntity> builder)
     {
         builder.HasMany(c => c.Cabinets)
-            .WithOne(c => c.Clinic);
+            .WithOne(c => c.Clinic)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
