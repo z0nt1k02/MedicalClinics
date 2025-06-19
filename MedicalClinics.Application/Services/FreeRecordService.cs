@@ -54,7 +54,7 @@ public class FreeRecordService : IFreeRecordService
         bool result = dateTimeSet.Contains(targetDate);
         return result;
     }
-
+    
     public DateTime ParseDate(string date)
     {
         DateTime newDate;
@@ -66,7 +66,6 @@ public class FreeRecordService : IFreeRecordService
                 "dd.MM.yyyy HH:mm",
                 CultureInfo.InvariantCulture
             );
-            TimeZoneInfo ekbTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Yekaterinburg");
             newDate = DateTime.SpecifyKind(parsedDateTime, DateTimeKind.Utc);
         }
         catch(FormatException ex)
@@ -75,4 +74,6 @@ public class FreeRecordService : IFreeRecordService
         }
         return newDate;
     }
+    
+    
 }

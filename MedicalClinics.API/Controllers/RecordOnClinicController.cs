@@ -20,7 +20,7 @@ public class RecordOnClinicController : ControllerBase
     }
 
     [Authorize(policy: "Admin")]
-    [Route("/admin")]
+    [Route("admin")]
     [HttpGet]
     public async Task<IActionResult> RecordsOnClinicAdmin( [FromQuery] Guid? cabinetId,[FromQuery] int? clinicId)
     {

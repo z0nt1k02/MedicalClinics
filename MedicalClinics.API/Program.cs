@@ -13,6 +13,7 @@ services.AddDbContext<IMedicalClinicsDbContext,MedicalClinicsDBContext>(options 
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", false);
 
 services.AddApiAuthentications(configuration);
 // Add services to the container.

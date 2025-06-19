@@ -26,7 +26,7 @@ public class RecordOnClinicService : IRecordOnClinicService
         var recordsOnClinic = _context.RecordOnClinics
             .AsNoTracking()
             .Include(c => c.Cabinet)
-            .ThenInclude(c=>c.Clinic).AsQueryable();
+            .ThenInclude(c=>c!.Clinic).AsQueryable();
 
         if (cabinetId.HasValue)
         {
@@ -67,12 +67,12 @@ public class RecordOnClinicService : IRecordOnClinicService
             Id = Guid.NewGuid(),
             CabinetId = cabinet.Id,
             ClinicId = cabinet.ClinicId,
-            /*CabinetName = cabinet.Name,
-            ClinicName = cabinet.Clinic!.Name,*/
             Cabinet = cabinet,
             Clinic = cabinet.Clinic,
             RecordDateOnUTC = recordDate,
             UserId = userId,
+            Contact = dto.contact,
+            Comment = dto.comment,
         };
         FreeRecordEntity deleteFreeRecord = cabinet.FreeRecords.First(fr=>fr.RecordDate==recordDate);
         cabinet.FreeRecords.Remove(deleteFreeRecord);
@@ -84,6 +84,8 @@ public class RecordOnClinicService : IRecordOnClinicService
     public async Task<List<RecordOnClinicEntity>> GetRecords(Guid userId)
     {
         List<RecordOnClinicEntity> records = await _context.RecordOnClinics
+            .Include(c=>c.Cabinet)
+            .ThenInclude(cl=>cl.Clinic)
             .AsNoTracking()
             .Where(r => r.UserId == userId)
             .ToListAsync();

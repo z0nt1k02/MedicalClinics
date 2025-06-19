@@ -1,4 +1,6 @@
-﻿namespace MedicalClinics.Application;
+﻿using System.Globalization;
+
+namespace MedicalClinics.Application;
 
 class Program
 {

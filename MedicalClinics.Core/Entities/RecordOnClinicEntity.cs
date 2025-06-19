@@ -10,10 +10,6 @@ public class RecordOnClinicEntity
     public int ClinicId { get; set; }
     public Guid CabinetId { get; set; }
     
-    /*public string CabinetName { get; set; } = string.Empty;
-    
-    public string ClinicName { get; set; } = string.Empty;*/
-    
     [ForeignKey(("ClinicId"))]
     public ClinicEntity? Clinic { get; set; }
     
