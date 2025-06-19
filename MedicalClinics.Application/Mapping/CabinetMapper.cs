@@ -9,16 +9,6 @@ public static class CabinetMapper
     {
         return new CabinetShortDto(entity.Id.ToString(), entity.Name);
     }
-
-    /*public static CabinetDto ToDto(this CabinetEntity entity)
-    {
-        List<string> freeDates = [];
-        foreach (var freeRecord in entity.FreeRecords)
-        {
-            freeDates.Add(freeRecord.RecordDate.ToString("dd.MM.yyyy"));
-        }
-        return new CabinetDto(entity.Id.ToString(),entity.Name,entity.Clinic!.Name,entity.Id.ToString(),freeDates);
-    }*/
     
     public static CabinetDto ToDtoDays(this CabinetEntity entity)
     {
