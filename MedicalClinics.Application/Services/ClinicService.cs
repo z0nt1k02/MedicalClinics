@@ -2,16 +2,16 @@
 using MedicalClinics.Application.Interfaces;
 using MedicalClinics.Core.Database.Entities;
 using MedicalClinics.Core.Entities;
-using MedicalClinics.Infrastructure.Database;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace MedicalClinics.Application.Services;
 
 public class ClinicService : IClinicService
 {
-    private readonly MedicalClinicsDBContext _context;
+    private readonly IMedicalClinicsDbContext _context;
 
-    public ClinicService(MedicalClinicsDBContext context)
+    public ClinicService(IMedicalClinicsDbContext context)
     {
         _context = context;
     }

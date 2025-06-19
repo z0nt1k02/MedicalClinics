@@ -2,23 +2,22 @@
 using MedicalClinics.Application.Interfaces;
 using MedicalClinics.Core.Database.Entities;
 using MedicalClinics.Core.Entities;
-using MedicalClinics.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedicalClinics.Application.Services;
 
 public class CabinetService : ICabinetService
 {
-    private readonly MedicalClinicsDBContext _context;
+    private readonly IMedicalClinicsDbContext _context;
     private readonly IClinicService _clinicService;
 
-    public CabinetService(MedicalClinicsDBContext context,IClinicService clinicService)
+    public CabinetService(IMedicalClinicsDbContext context,IClinicService clinicService)
     {
         _context = context;
         _clinicService = clinicService;
     }
-    
-    public async Task<CabinetEntity> GetCabinetWithFreeDaysByIdAsync(Guid id,int? month,int? year)
+
+    public async Task<CabinetEntity> GetCabinetById(Guid id)
     {
         CabinetEntity? cabinet = await _context.Cabinets
             .Include(f => f.FreeRecords)
@@ -26,6 +25,11 @@ public class CabinetService : ICabinetService
             .FirstOrDefaultAsync(c => c.Id == id);
         if(cabinet == null)
             throw new NullReferenceException($"Cabinet with id {id} not found");
+        return cabinet;
+    }
+    public async Task<CabinetEntity> GetCabinetWithFreeDaysByIdAsync(Guid id,int? month,int? year)
+    {
+        CabinetEntity cabinet = await GetCabinetById(id);
         
         var freeDates = cabinet.FreeRecords.AsQueryable();
 
@@ -57,13 +61,8 @@ public class CabinetService : ICabinetService
     
     public async Task<CabinetEntity> GetCabinetWithFreeHoursByIdAsync(Guid id,int day,int month,int year)
     {
-        CabinetEntity? cabinet = await _context.Cabinets
-            .Include(f => f.FreeRecords)
-            .Include(c=>c.Clinic)
-            .FirstOrDefaultAsync(c => c.Id == id);
-        if(cabinet == null)
-            throw new NullReferenceException($"Cabinet with id {id} not found");
         
+        CabinetEntity cabinet = await GetCabinetById(id);
         var freeDates = cabinet.FreeRecords.AsQueryable();
         var sortedDates = freeDates
             .Where(fr => fr.RecordDate.Month == month && fr.RecordDate.Year == year && fr.RecordDate.Day == day)

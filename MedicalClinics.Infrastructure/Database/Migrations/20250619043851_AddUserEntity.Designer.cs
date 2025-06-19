@@ -3,6 +3,7 @@ using System;
 using MedicalClinics.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedicalClinics.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalClinicsDBContext))]
-    partial class MedicalClinicsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250619043851_AddUserEntity")]
+    partial class AddUserEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,11 +83,19 @@ namespace MedicalClinics.Infrastructure.Migrations
                     b.Property<DateTime>("RecordDateOnUTC")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid?>("UserEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CabinetId");
 
                     b.HasIndex("ClinicId");
+
+                    b.HasIndex("UserEntityId");
 
                     b.ToTable("RecordOnClinics");
                 });
@@ -104,6 +115,28 @@ namespace MedicalClinics.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clinics");
+                });
+
+            modelBuilder.Entity("MedicalClinics.Core.Entities.UserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("HashedPassword")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MedicalClinics.Core.Database.Entities.CabinetEntity", b =>
@@ -142,6 +175,10 @@ namespace MedicalClinics.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MedicalClinics.Core.Entities.UserEntity", null)
+                        .WithMany("RecordsOnClinic")
+                        .HasForeignKey("UserEntityId");
+
                     b.Navigation("Cabinet");
 
                     b.Navigation("Clinic");
@@ -155,6 +192,11 @@ namespace MedicalClinics.Infrastructure.Migrations
             modelBuilder.Entity("MedicalClinics.Core.Entities.ClinicEntity", b =>
                 {
                     b.Navigation("Cabinets");
+                });
+
+            modelBuilder.Entity("MedicalClinics.Core.Entities.UserEntity", b =>
+                {
+                    b.Navigation("RecordsOnClinic");
                 });
 #pragma warning restore 612, 618
         }

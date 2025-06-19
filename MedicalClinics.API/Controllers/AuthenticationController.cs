@@ -1,0 +1,48 @@
+﻿using System.Security.Authentication;
+using MedicalClinics.Application.DTOs.Auth;
+using MedicalClinics.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+
+namespace MedicalClinics.API.Controllers;
+
+[ApiController]
+[Route("api/[controller]/[action]")]
+public class AuthenticationController : ControllerBase
+{
+    private readonly IAuthenticationService _authenticationService;
+
+    public AuthenticationController(IAuthenticationService authenticationService)
+    {
+        _authenticationService = authenticationService;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Registration(AuthDto authDto)
+    {
+        try
+        {
+            await _authenticationService.Registration(authDto.login, authDto.password);
+            return Ok("Registration successful");
+        }
+        catch (AuthenticationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(AuthDto authDto)
+    {
+        HttpContext context = HttpContext;
+        try
+        {
+            var token = await _authenticationService.Login(authDto.login, authDto.password);
+            context.Response.Cookies.Append("token", token);
+            return Ok("Login successful");
+        }
+        catch (AuthenticationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+}

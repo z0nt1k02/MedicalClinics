@@ -2,29 +2,29 @@
 using MedicalClinics.Application.DTOs.FreeRecords;
 using MedicalClinics.Application.Interfaces;
 using MedicalClinics.Core.Database.Entities;
-using MedicalClinics.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedicalClinics.Application.Services;
 
-public class FreeFreeRecordService : IFreeRecordService
+public class FreeRecordService : IFreeRecordService
 {
-    private readonly MedicalClinicsDBContext _context;
-    
-
-    public FreeFreeRecordService(MedicalClinicsDBContext context)
+    private readonly IMedicalClinicsDbContext _context;
+    private readonly ICabinetService _cabinetService;
+    public FreeRecordService(IMedicalClinicsDbContext context,ICabinetService cabinetService)
     {
         _context = context;
+        _cabinetService = cabinetService;
     }
     public async Task<FreeRecord> AddFreeRecord(CreateFreeRecordDto dto,Guid cabinetId)
     {
         CabinetEntity? cabinet = await _context.Cabinets
             .Include(f=>f.FreeRecords)
             .FirstOrDefaultAsync(f => f.Id == cabinetId);
+        
         if(cabinet == null)
             throw new NullReferenceException($"Cabinet with id {cabinetId} not found");
         DateTime parsedDate = ParseDate(dto.dateTime);
-        Console.WriteLine(parsedDate);
+        
         bool result = DateCheck(parsedDate, cabinet.FreeRecords);
         if (result)
         {
@@ -42,9 +42,6 @@ public class FreeFreeRecordService : IFreeRecordService
         _context.Set<FreeRecord>().Add(newFreeRecord);
         await _context.SaveChangesAsync();
         return newFreeRecord;
-        
-
-
     }
 
     private bool DateCheck(DateTime targetDate, List<FreeRecord> freeRecords)

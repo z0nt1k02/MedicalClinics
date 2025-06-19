@@ -1,5 +1,6 @@
 using System.Reflection;
 using MedicalClinics.API.Extensions;
+using MedicalClinics.Application.Interfaces;
 using MedicalClinics.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-services.AddDbContext<MedicalClinicsDBContext>(options =>
+services.AddDbContext<IMedicalClinicsDbContext,MedicalClinicsDBContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });

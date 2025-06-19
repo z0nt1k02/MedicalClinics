@@ -19,4 +19,6 @@ public class RecordOnClinic
     public DateTime RecordDateOnUTC { get; set; }
     
     public string Comment { get; set; } = string.Empty;
+    
+    public Guid UserId { get; set; }
 }
