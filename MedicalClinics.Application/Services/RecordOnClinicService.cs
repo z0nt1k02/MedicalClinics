@@ -56,6 +56,10 @@ public class RecordOnClinicService : IRecordOnClinicService
     {
         DateTime recordDate = _freeRecordService.ParseDate(dto.date);
         CabinetEntity cabinet = await _cabinetService.GetCabinetById(dto.cabinetId);
+        if (cabinet.ClinicId != dto.clinicId)
+        {
+            throw new ApplicationException($"There is no cabine with id {dto.cabinetId} in clinic with id {dto.clinicId}");
+        }
         bool checkDate = _freeRecordService.DateCheck(recordDate, cabinet.FreeRecords);
         if (!checkDate)
         {
