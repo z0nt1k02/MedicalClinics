@@ -76,7 +76,7 @@ public class CabinetService : ICabinetService
 
     public async Task<CabinetEntity> CreateCabinetAsync(CreateCabinetDto dto)
     {
-        ClinicEntity clinic = await _clinicService.GetClinicByIdAsync(Int32.Parse(dto.clinicId));
+        ClinicEntity clinic = await _clinicService.GetClinicByIdAsync(Guid.Parse(dto.clinicId));
         if (clinic == null)
         {
             throw new NullReferenceException($"Clinic with id {dto.clinicId} not found");
@@ -86,7 +86,7 @@ public class CabinetService : ICabinetService
         {
             Id = Guid.NewGuid(),
             Name = dto.name,
-            ClinicId = int.Parse(dto.clinicId),
+            ClinicId = Guid.Parse(dto.clinicId),
             Clinic = clinic,
             FreeRecords = new List<FreeRecordEntity>(),
         };

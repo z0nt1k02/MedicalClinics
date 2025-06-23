@@ -3,7 +3,6 @@ using System;
 using MedicalClinics.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,11 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedicalClinics.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalClinicsDBContext))]
-    [Migration("20250619112227_RemoveFieldsRecordOnClinic")]
-    partial class RemoveFieldsRecordOnClinic
+    partial class MedicalClinicsDBContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,8 +28,8 @@ namespace MedicalClinics.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("ClinicId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ClinicId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -73,8 +70,8 @@ namespace MedicalClinics.Infrastructure.Migrations
                     b.Property<Guid>("CabinetId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("ClinicId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ClinicId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Comment")
                         .IsRequired()
@@ -106,11 +103,9 @@ namespace MedicalClinics.Infrastructure.Migrations
 
             modelBuilder.Entity("MedicalClinics.Core.Entities.ClinicEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()

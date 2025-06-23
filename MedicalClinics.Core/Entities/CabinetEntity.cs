@@ -11,7 +11,7 @@ public class CabinetEntity
     
     [ForeignKey("ClinicId")]
     public ClinicEntity? Clinic { get; set; }
-    public int ClinicId { get; set; }
+    public Guid ClinicId { get; set; }
     
     public List<RecordOnClinicEntity> RecordsOnClinic { get; set; } = [];
 

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedicalClinics.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalClinicsDBContext))]
-    [Migration("20250619085152_AddConactFieldInRecord")]
-    partial class AddConactFieldInRecord
+    [Migration("20250623070838_InitialDatabase")]
+    partial class InitialDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,8 +31,8 @@ namespace MedicalClinics.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("ClinicId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ClinicId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -73,16 +73,8 @@ namespace MedicalClinics.Infrastructure.Migrations
                     b.Property<Guid>("CabinetId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("CabinetName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("ClinicId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ClinicName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ClinicId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Comment")
                         .IsRequired()
@@ -114,11 +106,9 @@ namespace MedicalClinics.Infrastructure.Migrations
 
             modelBuilder.Entity("MedicalClinics.Core.Entities.ClinicEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -176,7 +166,7 @@ namespace MedicalClinics.Infrastructure.Migrations
             modelBuilder.Entity("MedicalClinics.Core.Database.Entities.RecordOnClinicEntity", b =>
                 {
                     b.HasOne("MedicalClinics.Core.Database.Entities.CabinetEntity", "Cabinet")
-                        .WithMany()
+                        .WithMany("RecordsOnClinic")
                         .HasForeignKey("CabinetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -199,6 +189,8 @@ namespace MedicalClinics.Infrastructure.Migrations
             modelBuilder.Entity("MedicalClinics.Core.Database.Entities.CabinetEntity", b =>
                 {
                     b.Navigation("FreeRecords");
+
+                    b.Navigation("RecordsOnClinic");
                 });
 
             modelBuilder.Entity("MedicalClinics.Core.Entities.ClinicEntity", b =>

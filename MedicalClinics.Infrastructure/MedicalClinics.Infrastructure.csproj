@@ -29,4 +29,8 @@
         <ProjectReference Include="..\MedicalClinics.Application\MedicalClinics.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Database\Migrations\" />
+    </ItemGroup>
+
 </Project>

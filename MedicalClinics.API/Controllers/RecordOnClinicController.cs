@@ -22,7 +22,7 @@ public class RecordOnClinicController : ControllerBase
     [Authorize(policy: "Admin")]
     [Route("admin")]
     [HttpGet]
-    public async Task<IActionResult> RecordsOnClinicAdmin( [FromQuery] Guid? cabinetId,[FromQuery] int? clinicId)
+    public async Task<IActionResult> RecordsOnClinicAdmin( [FromQuery] Guid? cabinetId,[FromQuery] Guid? clinicId)
     {
         List<RecordOnClinicEntity> recordsOnClinic = await _recordOnClinicService.GetRecordsAdmin(cabinetId, clinicId);
         return Ok(recordsOnClinic.Select(r=>r.ToDto()).ToList());

@@ -9,7 +9,7 @@ public record CreateRecordOnClinicDto(
     string date,
     
     [Required]
-    int clinicId,
+    Guid clinicId,
     
     [Required]
     string contact,

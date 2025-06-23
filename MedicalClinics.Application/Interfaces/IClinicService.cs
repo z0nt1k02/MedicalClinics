@@ -7,7 +7,7 @@ namespace MedicalClinics.Application.Interfaces;
 public interface IClinicService
 {
     Task<IReadOnlyList<ClinicEntity>> GetAllClinicsAsync();
-    Task<ClinicEntity> GetClinicByIdAsync(int id);
+    Task<ClinicEntity> GetClinicByIdAsync(Guid id);
     Task<ClinicEntity> CreateClinicAsync(CreateClinicDto dto);
-    Task DeleteClinicAsync(int id);
+    Task DeleteClinicAsync(Guid id);
 }

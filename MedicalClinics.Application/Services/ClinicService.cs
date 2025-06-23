@@ -24,7 +24,7 @@ public class ClinicService : IClinicService
         return clinics;
     }
     
-    public async Task<ClinicEntity> GetClinicByIdAsync(int id)
+    public async Task<ClinicEntity> GetClinicByIdAsync(Guid id)
     {
         var clinic = await _context.Clinics
             .Include(c=>c.Cabinets)
@@ -40,6 +40,7 @@ public class ClinicService : IClinicService
     {
         ClinicEntity newClinic = new ClinicEntity
         {
+            Id = Guid.NewGuid(),
             Name = dto.name,
             Cabinets = new List<CabinetEntity>()
         };
@@ -48,7 +49,7 @@ public class ClinicService : IClinicService
         return newClinic;
     }
 
-    public async Task DeleteClinicAsync(int id)
+    public async Task DeleteClinicAsync(Guid id)
     {
         ClinicEntity? clinic = await _context.Clinics.FindAsync(id);
         if(clinic == null)

@@ -5,7 +5,7 @@ namespace MedicalClinics.Application.Interfaces;
 
 public interface IRecordOnClinicService
 {
-    Task<List<RecordOnClinicEntity>> GetRecordsAdmin(Guid? cabinetId,int? clinicId);
+    Task<List<RecordOnClinicEntity>> GetRecordsAdmin(Guid? cabinetId,Guid? clinicId);
     Task<RecordOnClinicEntity> AddRecordOnClinic(CreateRecordOnClinicDto dto,Guid userId);
     Task<List<RecordOnClinicEntity>> GetRecords(Guid userId);
 }

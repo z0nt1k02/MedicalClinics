@@ -7,7 +7,7 @@ public class RecordOnClinicEntity
 {
     public Guid Id { get; set; }
     
-    public int ClinicId { get; set; }
+    public Guid ClinicId { get; set; }
     public Guid CabinetId { get; set; }
     
     [ForeignKey(("ClinicId"))]

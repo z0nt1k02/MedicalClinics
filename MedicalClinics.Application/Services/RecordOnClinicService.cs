@@ -21,7 +21,7 @@ public class RecordOnClinicService : IRecordOnClinicService
      _freeRecordService = freeRecordService;
     }
     
-    public async Task<List<RecordOnClinicEntity>> GetRecordsAdmin(Guid? cabinetId,int? clinicId)
+    public async Task<List<RecordOnClinicEntity>> GetRecordsAdmin(Guid? cabinetId,Guid? clinicId)
     {
         var recordsOnClinic = _context.RecordOnClinics
             .AsNoTracking()

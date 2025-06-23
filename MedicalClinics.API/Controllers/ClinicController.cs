@@ -28,7 +28,7 @@ public class ClinicController : ControllerBase
     [Authorize]
     [HttpGet]
     [Route("{id}")]
-    public async Task<IActionResult> GetClinicById(int id)
+    public async Task<IActionResult> GetClinicById(Guid id)
     {
         try
         {
@@ -58,7 +58,7 @@ public class ClinicController : ControllerBase
     [Authorize(policy: "Admin")]
     [HttpDelete]
     [Route("{id}")]
-    public async Task<IActionResult> DeleteClinic(int id)
+    public async Task<IActionResult> DeleteClinic(Guid id)
     {
         try
         {
